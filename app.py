@@ -18,8 +18,9 @@ def get_genai_response(input_text, extracted_text, prompt):
     try:
         response = model.generate_content([input_text, extracted_text, prompt])
         # Check if the response has valid parts
-        if response and response.text:
-            return response.text
+        if hasattr(response, 'candidates') and response.candidates:
+            # Assuming we want the first candidate's text
+            return response.candidates[0].text if hasattr(response.candidates[0], 'text') else "No valid text found in the response."
         else:
             return "The AI could not generate a valid response."
     except Exception as e:
@@ -36,7 +37,7 @@ def extract_text_from_image(image):
 
 # Streamlit configuration
 st.set_page_config(page_title="BS Extractor")
-st.header("BankStatement Extractor")
+st.header("Bank Statement Extractor")
 
 # User input for the prompt
 input_text = st.text_input("Input Prompt:", key="input")
@@ -76,5 +77,7 @@ if button and input_text:
             st.error("No text was extracted from the image.")
     else:
         st.error("Please upload a valid image file!")
+
+
 
 

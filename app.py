@@ -36,7 +36,7 @@ def extract_text_from_image(image):
 
 # Streamlit configuration
 st.set_page_config(page_title="BS Extractor")
-st.header("BS Extractor")
+st.header("BankStatement Extractor")
 
 # User input for the prompt
 input_text = st.text_input("Input Prompt:", key="input")
